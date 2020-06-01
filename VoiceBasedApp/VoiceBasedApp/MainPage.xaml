@@ -7,10 +7,19 @@
              x:Class="VoiceBasedApp.MainPage">
 
     <StackLayout Margin="10,50,10,10">
-        <Button
+        
+        <ImageButton
             x:Name="start"
-            Text="Click To Speak"
-                Clicked="Start_Clicked"/>
+            BackgroundColor="Transparent"
+            WidthRequest="150"
+            HeightRequest="150"
+            FlexLayout.AlignSelf="Center"
+            FlexLayout.Grow="1"
+            Source="mic.png"
+            Clicked="Start_Clicked"
+            Aspect="AspectFit"/>
+        
+       
         <Label 
             x:Name="recon"
             Text="Recognized text" 
