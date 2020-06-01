@@ -1,16 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-
-using Android.App;
+﻿using Android.App;
 using Android.Content;
 using Android.OS;
-using Android.Runtime;
 using Android.Speech;
 using Android.Util;
-using Android.Views;
-using Android.Widget;
 using Plugin.CurrentActivity;
 using VoiceBasedApp.Droid;
 using Xamarin.Forms;
@@ -63,7 +55,7 @@ namespace VoiceBasedApp.Droid
 
         private void RecListener_EndSpeech() => Log.Debug(nameof(MainActivity), nameof(RecListener_EndSpeech));
 
-        private void RecListener_Error(object sender, SpeechRecognizerError e) => Log.Debug(nameof(MainActivity), $"{nameof(RecListener_Error)}={e.ToString()}");
+        private void RecListener_Error(object sender, SpeechRecognizerError e) => MessagingCenter.Send<ISpeechToText, string>(this, "STT", e.ToString());
 
         private void RecListener_Recognized(object sender, string recognized) => MessagingCenter.Send<ISpeechToText, string>(this, "STT", recognized);
 

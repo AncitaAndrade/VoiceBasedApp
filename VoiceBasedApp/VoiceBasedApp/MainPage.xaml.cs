@@ -3,7 +3,9 @@ using Plugin.Permissions.Abstractions;
 using System;
 using System.ComponentModel;
 using System.Threading.Tasks;
+using Xamarin.Essentials;
 using Xamarin.Forms;
+using PermissionStatus = Plugin.Permissions.Abstractions.PermissionStatus;
 
 namespace VoiceBasedApp
 {
@@ -54,7 +56,11 @@ namespace VoiceBasedApp
                 var canProceed = await GetPermissionStatusAsync();
 
                 if (canProceed)
+                {
+                    await TextToSpeech.SpeakAsync("You Can give command after the beep");
                     _speechRecongnitionInstance.StartSpeechToText();
+
+                }
                 else
                 {
                     if (await CrossPermissions.Current.ShouldShowRequestPermissionRationaleAsync(Permission.Microphone))
