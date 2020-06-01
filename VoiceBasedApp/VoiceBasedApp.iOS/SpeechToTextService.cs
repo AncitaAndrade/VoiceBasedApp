@@ -9,10 +9,10 @@ using UIKit;
 using VoiceBasedApp.iOS;
 using Xamarin.Forms;
 
-[assembly: Dependency(typeof(SpeechToTextImplementation))]
+[assembly: Dependency(typeof(SpeechToTextService))]
 namespace VoiceBasedApp.iOS
 {
-    public class SpeechToTextImplementation : ISpeechToText
+    public class SpeechToTextService : ISpeechToTextService
     {
         private AVAudioEngine _audioEngine = new AVAudioEngine();
         private SFSpeechRecognizer _speechRecognizer = new SFSpeechRecognizer();
@@ -22,7 +22,7 @@ namespace VoiceBasedApp.iOS
         private bool _isAuthorized;
         private NSTimer _timer;
 
-        public SpeechToTextImplementation()
+        public SpeechToTextService()
         {
             AskForSpeechPermission();
         }
@@ -63,7 +63,7 @@ namespace VoiceBasedApp.iOS
 
         private void DidFinishTalk()
         {
-            MessagingCenter.Send<ISpeechToText>(this, "Final");
+            MessagingCenter.Send<ISpeechToTextService>(this, "Final");
             if (_timer != null)
             {
                 _timer.Invalidate();
@@ -117,7 +117,7 @@ namespace VoiceBasedApp.iOS
                 if (result != null)
                 {
                     _recognizedString = result.BestTranscription.FormattedString;
-                    MessagingCenter.Send<ISpeechToText, string>(this, "STT", _recognizedString);
+                    MessagingCenter.Send<ISpeechToTextService, string>(this, "STT", _recognizedString);
                     _timer.Invalidate();
                     _timer = null;
                     _timer = NSTimer.CreateRepeatingScheduledTimer(2, delegate
@@ -127,7 +127,7 @@ namespace VoiceBasedApp.iOS
                 }
                 if (error != null || isFinal)
                 {
-                    MessagingCenter.Send<ISpeechToText>(this, "Final");
+                    MessagingCenter.Send<ISpeechToTextService>(this, "Final");
                     StopRecordingAndRecognition(audioSession);
                 }
             });

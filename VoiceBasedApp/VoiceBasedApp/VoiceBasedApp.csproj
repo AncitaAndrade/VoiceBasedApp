@@ -11,6 +11,16 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="Images\StartSpeaking.PNG" />
+    <None Remove="Images\StopSpeaking.png" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Include="Images\StartSpeaking.PNG" />
+    <EmbeddedResource Include="Images\StopSpeaking.png" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="Plugin.Permissions" Version="6.0.1" />
     <PackageReference Include="Xamarin.Forms" Version="4.6.0.800" />
     <PackageReference Include="Xamarin.Essentials" Version="1.5.3.2" />
