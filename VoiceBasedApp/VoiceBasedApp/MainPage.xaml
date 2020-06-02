@@ -22,8 +22,8 @@
 
         <voicebasedapp:CustomButton 
             x:Name="MyButton" 
-            WidthRequest="64"
-            HeightRequest="64"
+            WidthRequest="150"
+            HeightRequest="150"
             BackgroundColor="Transparent"
             Pressed="MyButton_Pressed"
             Released="MyButton_Released"/>

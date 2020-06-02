@@ -22,8 +22,8 @@ namespace VoiceBasedApp
             try
             {
                 _speechRecongnitionService = DependencyService.Get<ISpeechToTextService>();
-                MyButton.ImageSource = ImageSource.FromResource("VoiceBasedApp.Images.StartSpeaking.PNG");
-                SpeakInitialInstruction();
+                MyButton.ImageSource = ImageSource.FromResource("VoiceBasedApp.Images.mic.png");
+               SpeakInitialInstruction();
             }
             catch (Exception ex)
             {
@@ -66,7 +66,7 @@ namespace VoiceBasedApp
                     if (canProceed)
                     {
                         await TextToSpeech.SpeakAsync("You Can give command after the beep");
-                        Button.Source = ImageSource.FromResource("VoiceBasedApp.Images.StopSpeaking.png");
+                        Button.Source = ImageSource.FromResource("VoiceBasedApp.Images.MicrophoneOnMute.png");
                         _speechRecongnitionService.StartSpeechToText();
 
                     }
@@ -109,7 +109,7 @@ namespace VoiceBasedApp
 
             if (canProceed)
             {
-                MyButton.ImageSource= ImageSource.FromResource("VoiceBasedApp.Images.StopSpeaking.png");
+                MyButton.ImageSource= ImageSource.FromResource("VoiceBasedApp.Images.MicrophoneOnMute.png");
                 _speechRecongnitionService.StartSpeechToText();
 
             }
@@ -128,7 +128,7 @@ namespace VoiceBasedApp
 
         private void MyButton_Released(object sender, EventArgs e)
         {
-            MyButton.ImageSource = ImageSource.FromResource("VoiceBasedApp.Images.StartSpeaking.PNG");
+            MyButton.ImageSource = ImageSource.FromResource("VoiceBasedApp.Images.mic.png");
             _speechRecongnitionService.StopSpeechToText();
         }
     }
