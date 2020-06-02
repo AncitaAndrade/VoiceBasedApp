@@ -1,10 +1,12 @@
 ﻿using Android.Views;
+using TestApp.Droid;
+using VoiceBasedApp;
 using VoiceBasedApp.Droid;
 using Xamarin.Forms;
 using Xamarin.Forms.Platform.Android;
 
 [assembly: ExportRenderer(typeof(Button), typeof(CustomButtonRenderer))]
-namespace VoiceBasedApp.Droid
+namespace TestApp.Droid
 {
     public class CustomButtonRenderer : ButtonRenderer
     {
