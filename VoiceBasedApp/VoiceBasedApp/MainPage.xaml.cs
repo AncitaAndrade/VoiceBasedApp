@@ -14,13 +14,16 @@ namespace VoiceBasedApp
     [DesignTimeVisible(false)]
     public partial class MainPage : ContentPage
     {
-        private ISpeechToText _speechRecongnitionInstance;
+        private ISpeechToTextService _speechRecongnitionService;
+
         public MainPage()
         {
             InitializeComponent();
             try
             {
-                _speechRecongnitionInstance = DependencyService.Get<ISpeechToText>();
+                _speechRecongnitionService = DependencyService.Get<ISpeechToTextService>();
+                MyButton.ImageSource = ImageSource.FromResource("VoiceBasedApp.Images.mic.png");
+               SpeakInitialInstruction();
             }
             catch (Exception ex)
             {
@@ -28,14 +31,14 @@ namespace VoiceBasedApp
             }
 
 
-            MessagingCenter.Subscribe<ISpeechToText, string>(this, "STT", (sender, args) =>
+            MessagingCenter.Subscribe<ISpeechToTextService, string>(this, "STT", (sender, args) =>
             {
                 SpeechToTextFinalResultRecieved(args);
             });
 
-            MessagingCenter.Subscribe<ISpeechToText>(this, "Final", (sender) =>
+            MessagingCenter.Subscribe<ISpeechToTextService>(this, "Final", (sender) =>
             {
-                start.IsEnabled = true;
+                Button.IsEnabled = true;
             });
 
             MessagingCenter.Subscribe<IMessageSender, string>(this, "STT", (sender, args) =>
@@ -44,34 +47,40 @@ namespace VoiceBasedApp
             });
         }
 
+        private void SpeakInitialInstruction()
+        {
+            TextToSpeech.SpeakAsync("To Speak Press and Hold the microphone Image. Release when done!");
+        }
+
         private void SpeechToTextFinalResultRecieved(string args)
         {
             recon.Text = args;
         }
 
-        private async void Start_Clicked(object sender, EventArgs e)
+        private async void Button_Clicked(object sender, EventArgs e)
         {
             try
             {
-                var canProceed = await GetPermissionStatusAsync();
+                   var canProceed = await GetPermissionStatusAsync();
 
-                if (canProceed)
-                {
-                    await TextToSpeech.SpeakAsync("You Can give command after the beep");
-                    _speechRecongnitionInstance.StartSpeechToText();
-
-                }
-                else
-                {
-                    if (await CrossPermissions.Current.ShouldShowRequestPermissionRationaleAsync(Permission.Microphone))
+                    if (canProceed)
                     {
-                        await DisplayAlert("Need Mic", "Need Microphone Access", "OK");
-                    }
+                        await TextToSpeech.SpeakAsync("You Can give command after the beep");
+                        Button.Source = ImageSource.FromResource("VoiceBasedApp.Images.MicrophoneOnMute.png");
+                        _speechRecongnitionService.StartSpeechToText();
 
-                    var status = await CrossPermissions.Current.RequestPermissionAsync<MicrophonePermission>();
-                    if (status == PermissionStatus.Granted)
-                        Start_Clicked(sender, e);
-                }
+                    }
+                    else
+                    {
+                        if (await CrossPermissions.Current.ShouldShowRequestPermissionRationaleAsync(Permission.Microphone))
+                        {
+                            await DisplayAlert("Need Mic", "Need Microphone Access", "OK");
+                        }
+
+                        var status = await CrossPermissions.Current.RequestPermissionAsync<MicrophonePermission>();
+                        if (status == PermissionStatus.Granted)
+                            Button_Clicked(sender, e);
+                    }
             }
             catch (Exception ex)
             {
@@ -80,7 +89,7 @@ namespace VoiceBasedApp
 
             if (Device.RuntimePlatform == Device.iOS)
             {
-                start.IsEnabled = false;
+                Button.IsEnabled = false;
             }
         }
 
@@ -92,6 +101,35 @@ namespace VoiceBasedApp
                 return true;
             }
             return false;
+        }
+
+        private async void MyButton_Pressed(object sender, EventArgs e)
+        {
+            var canProceed = await GetPermissionStatusAsync();
+
+            if (canProceed)
+            {
+                MyButton.ImageSource= ImageSource.FromResource("VoiceBasedApp.Images.MicrophoneOnMute.png");
+                _speechRecongnitionService.StartSpeechToText();
+
+            }
+            else
+            {
+                if (await CrossPermissions.Current.ShouldShowRequestPermissionRationaleAsync(Permission.Microphone))
+                {
+                    await DisplayAlert("Need Mic", "Need Microphone Access", "OK");
+                }
+
+                var status = await CrossPermissions.Current.RequestPermissionAsync<MicrophonePermission>();
+                if (status == PermissionStatus.Granted)
+                    MyButton_Pressed(sender, e);
+            }
+        }
+
+        private void MyButton_Released(object sender, EventArgs e)
+        {
+            MyButton.ImageSource = ImageSource.FromResource("VoiceBasedApp.Images.mic.png");
+            _speechRecongnitionService.StopSpeechToText();
         }
     }
 }

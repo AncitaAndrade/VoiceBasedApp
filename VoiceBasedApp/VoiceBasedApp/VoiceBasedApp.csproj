@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
@@ -9,6 +9,16 @@
     <DebugType>portable</DebugType>
     <DebugSymbols>true</DebugSymbols>
   </PropertyGroup>
+
+  <ItemGroup>
+    <None Remove="Images\mic.png" />
+    <None Remove="Images\MicrophoneOnMute.png" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Include="Images\mic.png" />
+    <EmbeddedResource Include="Images\MicrophoneOnMute.png" />
+  </ItemGroup>
 
   <ItemGroup>
     <PackageReference Include="Plugin.Permissions" Version="6.0.1" />

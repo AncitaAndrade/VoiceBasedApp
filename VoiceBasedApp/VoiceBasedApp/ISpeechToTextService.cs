@@ -1,6 +1,6 @@
 ﻿namespace VoiceBasedApp
 {
-    public interface ISpeechToText
+    public interface ISpeechToTextService
     {
         void StartSpeechToText();
         void StopSpeechToText();

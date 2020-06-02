@@ -2,24 +2,32 @@
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:d="http://xamarin.com/schemas/2014/forms/design"
-             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:voicebasedapp="clr-namespace:VoiceBasedApp"
              mc:Ignorable="d"
              x:Class="VoiceBasedApp.MainPage">
 
     <StackLayout Margin="10,50,10,10">
         
         <ImageButton
-            x:Name="start"
+            x:Name="Button"
             BackgroundColor="Transparent"
             WidthRequest="150"
             HeightRequest="150"
             FlexLayout.AlignSelf="Center"
             FlexLayout.Grow="1"
-            Source="mic.png"
-            Clicked="Start_Clicked"
-            Aspect="AspectFit"/>
-        
-       
+            Clicked="Button_Clicked"
+            Aspect="AspectFit"
+            IsVisible="False"
+            />
+
+        <voicebasedapp:CustomButton 
+            x:Name="MyButton" 
+            WidthRequest="150"
+            HeightRequest="150"
+            BackgroundColor="Transparent"
+            Pressed="MyButton_Pressed"
+            Released="MyButton_Released"/>
+
         <Label 
             x:Name="recon"
             Text="Recognized text" 

@@ -7,22 +7,19 @@ using Plugin.CurrentActivity;
 using VoiceBasedApp.Droid;
 using Xamarin.Forms;
 
-[assembly: Dependency(typeof(SpeechToTextImplementation))]
+[assembly: Dependency(typeof(SpeechToTextService))]
 namespace VoiceBasedApp.Droid
 {
-    public class SpeechToTextImplementation : ISpeechToText
+    public class SpeechToTextService : ISpeechToTextService
     {
-        private readonly int VOICE = 10;
         private Activity _activity;
-        SpeechRecognizer Recognizer { get; set; }
-        Intent SpeechIntent { get; set; }
-        public SpeechToTextImplementation()
+        private SpeechRecognizer Recognizer { get; set; }
+        private Intent SpeechIntent { get; set; }
+        public SpeechToTextService()
         {
             _activity = CrossCurrentActivity.Current.Activity;
 
         }
-
-
 
         public void StartSpeechToText()
         {
@@ -41,7 +38,7 @@ namespace VoiceBasedApp.Droid
             Recognizer = SpeechRecognizer.CreateSpeechRecognizer(_activity.BaseContext);
             Recognizer.SetRecognitionListener(recListener);
 
-            SpeechIntent = new Intent(RecognizerIntent.ActionVoiceSearchHandsFree);
+            SpeechIntent = new Intent(RecognizerIntent.ActionRecognizeSpeech);
             SpeechIntent.PutExtra(RecognizerIntent.ExtraLanguageModel, RecognizerIntent.LanguageModelFreeForm);
             SpeechIntent.PutExtra(RecognizerIntent.ExtraCallingPackage, _activity.PackageName);
             Recognizer.StartListening(SpeechIntent);
@@ -55,13 +52,13 @@ namespace VoiceBasedApp.Droid
 
         private void RecListener_EndSpeech() => Log.Debug(nameof(MainActivity), nameof(RecListener_EndSpeech));
 
-        private void RecListener_Error(object sender, SpeechRecognizerError e) => MessagingCenter.Send<ISpeechToText, string>(this, "STT", e.ToString());
+        private void RecListener_Error(object sender, SpeechRecognizerError e) => MessagingCenter.Send<ISpeechToTextService, string>(this, "STT", e.ToString());
 
-        private void RecListener_Recognized(object sender, string recognized) => MessagingCenter.Send<ISpeechToText, string>(this, "STT", recognized);
+        private void RecListener_Recognized(object sender, string recognized) => MessagingCenter.Send<ISpeechToTextService, string>(this, "STT", recognized);
 
         public void StopSpeechToText()
         {
-
+            Recognizer.StopListening();
         }
     }
 }
