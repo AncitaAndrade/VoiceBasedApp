@@ -1,7 +1,7 @@
 ﻿using System;
 using Xamarin.Forms;
 
-namespace VoiceBasedApp
+namespace TestApp
 {
     public class CustomButton : Button
     {

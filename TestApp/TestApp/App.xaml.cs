@@ -2,7 +2,7 @@
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
-namespace VoiceBasedApp
+namespace TestApp
 {
     public partial class App : Application
     {
