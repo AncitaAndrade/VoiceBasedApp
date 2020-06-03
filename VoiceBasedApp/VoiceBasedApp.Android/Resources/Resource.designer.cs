@@ -9481,10 +9481,10 @@ namespace VoiceBasedApp.Droid
 			public const int support_simple_spinner_dropdown_item = 2131427396;
 			
 			// aapt resource value: 0x7F0B0045
-			public const int Tabbar = 2131427397;
+			public const int tabbar = 2131427397;
 			
 			// aapt resource value: 0x7F0B0046
-			public const int Toolbar = 2131427398;
+			public const int toolbar = 2131427398;
 			
 			static Layout()
 			{
@@ -9500,7 +9500,7 @@ namespace VoiceBasedApp.Droid
 		{
 			
 			// aapt resource value: 0x7F0C0000
-			public const int hearIcon = 2131492864;
+			public const int hearicon = 2131492864;
 			
 			// aapt resource value: 0x7F0C0001
 			public const int icon = 2131492865;

@@ -2,7 +2,6 @@
 using Android.Content;
 using Android.OS;
 using Android.Speech;
-using Android.Util;
 using Plugin.CurrentActivity;
 using VoiceBasedApp.Droid;
 using Xamarin.Forms;
@@ -15,6 +14,8 @@ namespace VoiceBasedApp.Droid
         private Activity _activity;
         private SpeechRecognizer Recognizer { get; set; }
         private Intent SpeechIntent { get; set; }
+
+        private bool isRecording;
         public SpeechToTextService()
         {
             _activity = CrossCurrentActivity.Current.Activity;
@@ -46,19 +47,32 @@ namespace VoiceBasedApp.Droid
         }
 
 
-        private void RecListener_Ready(object sender, Bundle e) => Log.Debug(nameof(MainActivity), nameof(RecListener_Ready));
+        private void RecListener_Ready(object sender, Bundle e) => System.Diagnostics.Debug.WriteLine(nameof(RecListener_Ready));
 
-        private void RecListener_BeginSpeech() => Log.Debug(nameof(MainActivity), nameof(RecListener_BeginSpeech));
+        private void RecListener_BeginSpeech() => System.Diagnostics.Debug.WriteLine(nameof(RecListener_BeginSpeech));
 
-        private void RecListener_EndSpeech() => Log.Debug(nameof(MainActivity), nameof(RecListener_EndSpeech));
+        private void RecListener_EndSpeech() => System.Diagnostics.Debug.WriteLine(nameof(RecListener_EndSpeech));
 
-        private void RecListener_Error(object sender, SpeechRecognizerError e) => MessagingCenter.Send<ISpeechToTextService, string>(this, "STT", e.ToString());
+        private void RecListener_Error(object sender, SpeechRecognizerError e)
+        {
+            isRecording = false;
+            MessagingCenter.Send<ISpeechToTextService, string>(this, "STT", e.ToString());
+        }
 
-        private void RecListener_Recognized(object sender, string recognized) => MessagingCenter.Send<ISpeechToTextService, string>(this, "STT", recognized);
+        private void RecListener_Recognized(object sender, string recognized) 
+        { 
+            isRecording=false; 
+            MessagingCenter.Send<ISpeechToTextService, string>(this, "STT", recognized); 
+        }
 
         public void StopSpeechToText()
         {
-            Recognizer.StopListening();
+            if(isRecording)
+            {
+                isRecording = false;
+                Recognizer.StopListening();
+            }
+            
         }
     }
 }

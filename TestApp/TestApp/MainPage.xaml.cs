@@ -1,6 +1,5 @@
 ﻿using System;
 using System.ComponentModel;
-using System.Threading.Tasks;
 using Xamarin.Forms;
 using VoiceBasedApp;
 using Xamarin.Essentials;
@@ -16,29 +15,50 @@ namespace TestApp
     public partial class MainPage : ContentPage
     {
 
-        ISpeechToTextService stt;
+        private ISpeechToTextService speechToTextService;
+        private bool isPermissionGranted;
         
         public MainPage()
         {
             InitializeComponent();
             try
             {
-                stt = DependencyService.Get<ISpeechToTextService>();
+                speechToTextService = DependencyService.Get<ISpeechToTextService>();
                 MyButton.ImageSource = ImageSource.FromResource("TestApp.Images.mic.png");
+                CheckPermissionStatus();
                 SpeakInitialInstruction();
             }
             catch (Exception ex)
             {
                 recon.Text = ex.Message;
             }
-            //stt = DependencyService.Get<ISpeechToTextService>();
             MessagingCenter.Subscribe<ISpeechToTextService, string>(this, "STT", (sender, args) =>
             {
                 SpeechToTextFinalResultRecieved(args);
             });
+        }
 
-           
+        private async void CheckPermissionStatus()
+        {
+            var permissionStatus = await CrossPermissions.Current.CheckPermissionStatusAsync(Permission.Microphone);
+            if(PermissionStatus.Granted== permissionStatus)
+            {
+                isPermissionGranted = true;
+            }
+            else
+            {
+                if (await CrossPermissions.Current.ShouldShowRequestPermissionRationaleAsync(Permission.Microphone))
+                {
+                    await DisplayAlert("Need Mic", "Need Microphone Access", "OK");
+                }
 
+                var status = await CrossPermissions.Current.RequestPermissionAsync<MicrophonePermission>();
+                if (status == PermissionStatus.Granted)
+                {
+                    isPermissionGranted = true;
+                }
+                    
+            }
         }
 
         private void SpeakInitialInstruction()
@@ -51,38 +71,18 @@ namespace TestApp
            recon.Text = args;
         }
 
-        private async Task<bool> GetPermissionStatusAsync()
-        {
-            var permissionStatus = await CrossPermissions.Current.CheckPermissionStatusAsync(Permission.Microphone);
-            if (PermissionStatus.Granted == permissionStatus)
-            {
-                return true;
-            }
-            return false;
-        }
-
-        private async void MyButton_Pressed(object sender, EventArgs e)
+        private void MyButton_Pressed(object sender, EventArgs e)
         {
             try
             {
-                var canProceed = await GetPermissionStatusAsync();
-
-                if (canProceed)
+                if (isPermissionGranted)
                 {
                     MyButton.ImageSource = ImageSource.FromResource("TestApp.Images.MicrophoneOnMute.png");
-                    stt.StartSpeechToText();
-
+                    speechToTextService.StartSpeechToText();
                 }
                 else
                 {
-                    if (await CrossPermissions.Current.ShouldShowRequestPermissionRationaleAsync(Permission.Microphone))
-                    {
-                        await DisplayAlert("Need Mic", "Need Microphone Access", "OK");
-                    }
-
-                    var status = await CrossPermissions.Current.RequestPermissionAsync<MicrophonePermission>();
-                    if (status == PermissionStatus.Granted)
-                        MyButton_Pressed(sender, e);
+                    CheckPermissionStatus();
                 }
             }
             catch (Exception ex)
@@ -99,7 +99,7 @@ namespace TestApp
         private void MyButton_Released(object sender, EventArgs e)
         {
             MyButton.ImageSource = ImageSource.FromResource("TestApp.Images.mic.png");
-            stt.StopSpeechToText();
+            speechToTextService.StopSpeechToText();
         }
     }
 }
