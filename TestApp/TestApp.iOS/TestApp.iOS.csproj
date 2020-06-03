@@ -131,6 +131,8 @@
     <ProjectReference Include="..\..\VoiceBasedApp\VoiceBasedApp.iOS\VoiceBasedApp.iOS.csproj">
       <Project>{d0241a12-1d38-4de4-aaaa-f43844c73ea4}</Project>
       <Name>VoiceBasedApp.iOS</Name>
+      <IsAppExtension>false</IsAppExtension>
+      <IsWatchApp>false</IsWatchApp>
     </ProjectReference>
     <ProjectReference Include="..\TestApp\TestApp.csproj">
       <Project>{6BBD039D-08B4-4154-93A5-5764145359AE}</Project>
