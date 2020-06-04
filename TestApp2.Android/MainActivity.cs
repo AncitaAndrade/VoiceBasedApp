@@ -1,20 +1,14 @@
-﻿
-using VoiceBasedApp;
-using System.Collections.Generic;
-using Android.Views;
-using Android.Content.PM;
+﻿using Android.Content.PM;
 using Android.App;
-using Android.Content;
 using Android.Widget;
 using Android.OS;
-using Android.Speech;
 using Xamarin.Essentials;
 using Plugin.Permissions;
-//using Plugin.Permissions.Abstractions;
 using PermissionStatus = Plugin.Permissions.Abstractions.PermissionStatus;
 using System;
 using Android.Runtime;
-//using Xamarin.Forms;
+using VoiceBasedApp.Droid;
+using VoiceBasedApp;
 
 namespace TestApp2.Android
 {
@@ -24,39 +18,22 @@ namespace TestApp2.Android
         private ISpeechToTextService SpeechToText;
         private bool isPermissionGranted;
 
-
         private bool isRecording;
-        private readonly int VOICE = 10;
         private TextView _textBox;
         private Button _myButton;
-        
 
-        
         protected override void OnCreate(Bundle savedInstanceState)
         {
-           
-
+            
             base.OnCreate(savedInstanceState);
 
+            SpeechToText = new SpeechToTextService();
             isRecording = false;
 
             SetContentView(Resource.Layout.Main);
 
             _myButton = FindViewById<Button>(Resource.Id.myView);
             _textBox = FindViewById<TextView>(Resource.Id.textYourText);
-
-
-            try
-            {
-                
-                CheckPermissionStatus();
-                SpeakInitialInstruction();
-            }
-
-            catch (Exception ex)
-            {
-                _textBox.Text = ex.Message;
-            }
 
             Xamarin.Forms.MessagingCenter.Subscribe<ISpeechToTextService, string>(this, "STT", (sender, args) =>
             {
@@ -68,6 +45,7 @@ namespace TestApp2.Android
             {
                 try
                 {
+                    CheckPermissionStatus();
                     
                     if (isPermissionGranted)
                     {
@@ -83,8 +61,6 @@ namespace TestApp2.Android
                 {
                     _textBox.Text = ex.Message;
                 }
-
-
             };
 
         }
@@ -139,59 +115,6 @@ namespace TestApp2.Android
             _textBox.Text = args;
         }
 
-        private void MyButton_Pressed(object sender, EventArgs e)
-        {
-            try
-            {
-                if (isPermissionGranted)
-                {
-                    
-                    SpeechToText.StartSpeechToText();
-                }
-                else
-                {
-                    CheckPermissionStatus();
-                }
-            }
-            catch (Exception ex)
-            {
-                _textBox.Text = ex.Message;
-            }
-
-            
-        }
-
-
-
-        //protected override void OnActivityResult(int requestCode, Result resultVal, Intent data)
-        //{
-
-        //    if (requestCode == VOICE)
-        //    {
-        //        if (resultVal == Result.Ok)
-        //        {
-        //            var matches = data.GetStringArrayListExtra(RecognizerIntent.ExtraResults);
-        //            if (matches.Count != 0)
-        //            {
-        //                string textInput = _textBox.Text + matches[0];
-
-        //                // limit the output to 500 characters
-        //                if (textInput.Length > 500)
-        //                    textInput = textInput.Substring(0, 500);
-        //                _textBox.Text = textInput;
-        //            }
-        //            else
-        //                _textBox.Text = "No speech was recognised";
-        //            // change the text back on the button
-        //            _myButton.Text = "Start Recording";
-        //        }
-        //    }
-
-        //    base.OnActivityResult(requestCode, resultVal, data);
-        //}
-
-        
-
-
+       
     }
 }
