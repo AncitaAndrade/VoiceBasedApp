@@ -18,7 +18,6 @@ namespace TestApp2.Android
         private ISpeechToTextService SpeechToText;
         private bool isPermissionGranted;
 
-        private bool isRecording;
         private TextView _textBox;
         private Button _myButton;
 
@@ -27,10 +26,8 @@ namespace TestApp2.Android
             
             base.OnCreate(savedInstanceState);
 
-            SpeechToText = new SpeechToTextService();
-            isRecording = false;
-
             SetContentView(Resource.Layout.Main);
+            SpeechToText = new SpeechToTextService();
 
             _myButton = FindViewById<Button>(Resource.Id.myView);
             _textBox = FindViewById<TextView>(Resource.Id.textYourText);
@@ -103,11 +100,6 @@ namespace TestApp2.Android
                 }
 
             }
-        }
-
-        private void SpeakInitialInstruction()
-        {
-            TextToSpeech.SpeakAsync("To Speak Press and Hold the microphone Image. Release when done!");
         }
 
         private void SpeechToTextFinalResultRecieved(string args)
