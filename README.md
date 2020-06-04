@@ -4,4 +4,4 @@
 
 
 
-->TestApp folder and TestApp2.Android folder uses Voice Based App as reference to implement speech recognition .
+->TestApp folder and TestApp2.Android folder uses Voice Based App as reference to get implementation for speech recognition. The working app is present in this 2 folders.
