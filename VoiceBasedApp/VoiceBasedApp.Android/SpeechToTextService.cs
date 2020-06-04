@@ -1,8 +1,6 @@
-﻿using Android.App;
-using Android.Content;
+﻿using Android.Content;
 using Android.OS;
 using Android.Speech;
-using Plugin.CurrentActivity;
 using VoiceBasedApp.Droid;
 using Xamarin.Forms;
 
@@ -11,17 +9,11 @@ namespace VoiceBasedApp.Droid
 {
     public class SpeechToTextService : ISpeechToTextService
     {
-        private Activity _activity;
         private SpeechRecognizer Recognizer { get; set; }
         private Intent SpeechIntent { get; set; }
 
         private bool isRecording;
-        public SpeechToTextService()
-        {
-            _activity = CrossCurrentActivity.Current.Activity;
-
-        }
-
+        
         public void StartSpeechToText()
         {
             StartRecordingAndRecognizing();
@@ -36,12 +28,12 @@ namespace VoiceBasedApp.Droid
             recListener.Ready += RecListener_Ready;
             recListener.Recognized += RecListener_Recognized;
 
-            Recognizer = SpeechRecognizer.CreateSpeechRecognizer(_activity.BaseContext);
+            Recognizer = SpeechRecognizer.CreateSpeechRecognizer(Android.App.Application.Context);
             Recognizer.SetRecognitionListener(recListener);
 
             SpeechIntent = new Intent(RecognizerIntent.ActionRecognizeSpeech);
             SpeechIntent.PutExtra(RecognizerIntent.ExtraLanguageModel, RecognizerIntent.LanguageModelFreeForm);
-            SpeechIntent.PutExtra(RecognizerIntent.ExtraCallingPackage, _activity.PackageName);
+            SpeechIntent.PutExtra(RecognizerIntent.ExtraCallingPackage, Android.App.Application.Context.PackageName);
             Recognizer.StartListening(SpeechIntent);
 
         }
