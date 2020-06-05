@@ -17,7 +17,7 @@ namespace VoiceBasedApp
 
         List<string> GetExecutableCommands();  // prio 3
 
-        void DeregisterCommand(string commandString); 
+        void DeregisterCommand(string commandString);
 
         //void RegisterListeningCompletedCallBack(Action callBack); //prio 5
 
@@ -26,11 +26,11 @@ namespace VoiceBasedApp
         // void RegisterUnrecognizableCommandCallBack(Action callBack); //prio 6
 
 
-        // void DeregisterUnrecognizableCommandCallBack(Action callBack); //prio 6
+        void DeregisterUnrecognizableCommandCallBack(Action callBack); //prio 6
 
-        // void RegisterUnexecuatbleCallBack(Action callBack); //prio 7
+        void RegisterUnexecuatbleCallBack(Action callBack); //prio 7
 
-        // void DeregisterUnexecuatbleCallBack(Action callBack); //prio 7
+        void DeregisterUnexecuatbleCallBack(Action callBack); //prio 7
 
 
 

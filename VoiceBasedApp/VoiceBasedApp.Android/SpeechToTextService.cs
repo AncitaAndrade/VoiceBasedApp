@@ -1,6 +1,7 @@
 ﻿using Android.Content;
 using Android.OS;
 using Android.Speech;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using VoiceBasedApp.Droid;
@@ -120,6 +121,21 @@ namespace VoiceBasedApp.Droid
         public List<string> GetExecutableCommands()
         {
             return (AllRegisteredCommands.Where(item => item.Value.CanExecute()).Select(item => item.Key)).ToList();
+        }
+
+        public void DeregisterUnrecognizableCommandCallBack(Action callBack)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void RegisterUnexecuatbleCallBack(Action callBack)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void DeregisterUnexecuatbleCallBack(Action callBack)
+        {
+            throw new NotImplementedException();
         }
     }
 }
