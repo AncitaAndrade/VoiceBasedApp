@@ -35,15 +35,27 @@ namespace VoiceBasedApp.Droid
             SpeechIntent.PutExtra(RecognizerIntent.ExtraLanguageModel, RecognizerIntent.LanguageModelFreeForm);
             SpeechIntent.PutExtra(RecognizerIntent.ExtraCallingPackage, Android.App.Application.Context.PackageName);
             Recognizer.StartListening(SpeechIntent);
+            
 
         }
 
 
         private void RecListener_Ready(object sender, Bundle e) => System.Diagnostics.Debug.WriteLine(nameof(RecListener_Ready));
 
-        private void RecListener_BeginSpeech() => System.Diagnostics.Debug.WriteLine(nameof(RecListener_BeginSpeech));
+        private void RecListener_BeginSpeech() 
+        {
+            isRecording = true;
+           
+            System.Diagnostics.Debug.WriteLine(nameof(RecListener_BeginSpeech));
+                
+        }
 
-        private void RecListener_EndSpeech() => System.Diagnostics.Debug.WriteLine(nameof(RecListener_EndSpeech));
+        private void RecListener_EndSpeech()
+        {
+            isRecording = false;
+           
+            System.Diagnostics.Debug.WriteLine(nameof(RecListener_EndSpeech));
+        }
 
         private void RecListener_Error(object sender, SpeechRecognizerError e)
         {
@@ -65,6 +77,11 @@ namespace VoiceBasedApp.Droid
                 Recognizer.StopListening();
             }
             
+        }
+
+        public bool IsListening()
+        {
+            return isRecording;
         }
     }
 }
