@@ -43,8 +43,6 @@ namespace VoiceBasedApp.Droid
             SpeechIntent.PutExtra(RecognizerIntent.ExtraLanguageModel, RecognizerIntent.LanguageModelFreeForm);
             SpeechIntent.PutExtra(RecognizerIntent.ExtraCallingPackage, Android.App.Application.Context.PackageName);
             Recognizer.StartListening(SpeechIntent);
-            
-
         }
 
 
@@ -106,6 +104,11 @@ namespace VoiceBasedApp.Droid
         public void RegisterCommand(string commandString, IVoiceCommand commandToBeExecuted)
         {
             AllRegisteredCoomands.Add(commandString.ToLower(), commandToBeExecuted);
+        }
+
+        public void DeregisterCommand(string commandString)
+        {
+            AllRegisteredCoomands.Remove(commandString);
         }
     }
 }
