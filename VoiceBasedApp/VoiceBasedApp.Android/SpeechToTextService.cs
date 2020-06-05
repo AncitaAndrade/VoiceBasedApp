@@ -73,8 +73,18 @@ namespace VoiceBasedApp.Droid
 
         private void RecListener_Recognized(object sender, string recognized) 
         { 
-            isRecording=false; 
-            MessagingCenter.Send<IVoiceToCommandService, string>(this, "STT", recognized); 
+            isRecording=false;
+            if(AllRegisteredCoomands.ContainsKey(recognized))
+            {
+                var command = AllRegisteredCoomands[recognized];
+                if(command.CanExecute())
+                {
+                    command.Execute();
+                }
+            }
+
+
+        MessagingCenter.Send<IVoiceToCommandService, string>(this, "STT", recognized); 
         }
 
         public void StopListening()
