@@ -24,9 +24,7 @@ namespace TestApp
             try
             {
                 speechToTextService = DependencyService.Get<IVoiceToCommandService>();
-                speechToTextService.RegisterCommand("Hello",new VoiceCommand(()=> { SpeechToTextFinalResultRecieved("Command is 1:Hello"); }));
-                speechToTextService.RegisterCommand("Next", new VoiceCommand(() => { SpeechToTextFinalResultRecieved("Command is 1:Go Next"); }));
-                speechToTextService.RegisterCommand("Back", new VoiceCommand(() => { SpeechToTextFinalResultRecieved("Command is 1:Go Back"); }));
+                RegisterVoiceCommands();
                 MyButton.ImageSource = ImageSource.FromResource("TestApp.Images.mic.png");
                 CheckPermissionStatus();
                 SpeakInitialInstruction();
@@ -39,6 +37,13 @@ namespace TestApp
             //{
             //    SpeechToTextFinalResultRecieved(args);
             //});
+        }
+
+        private void RegisterVoiceCommands()
+        {
+            speechToTextService.RegisterCommand("Hello", new VoiceCommand(() => { SpeechToTextFinalResultRecieved("Command is 1:Hello"); }));
+            speechToTextService.RegisterCommand("Next", new VoiceCommand(() => { SpeechToTextFinalResultRecieved("Command is 2:Go Next"); }));
+            speechToTextService.RegisterCommand("Back", new VoiceCommand(() => { SpeechToTextFinalResultRecieved("Command is 3:Go Back"); }));
         }
 
         private async void CheckPermissionStatus()

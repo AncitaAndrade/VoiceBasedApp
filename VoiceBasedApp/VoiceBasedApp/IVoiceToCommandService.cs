@@ -15,7 +15,7 @@ namespace VoiceBasedApp
 
         List<string> GetAvailableCommands(); //prio 3
 
-        //List<string> GetExecutableCommands();  // prio 3
+        List<string> GetExecutableCommands();  // prio 3
 
         void DeregisterCommand(string commandString); 
 

@@ -16,11 +16,11 @@ namespace VoiceBasedApp.Droid
 
         private bool isRecording;
 
-        private IDictionary<string, IVoiceCommand> AllRegisteredCoomands;
+        private IDictionary<string, IVoiceCommand> AllRegisteredCommands;
 
         public SpeechToTextService()
         {
-            AllRegisteredCoomands = new Dictionary<string, IVoiceCommand>();
+            AllRegisteredCommands = new Dictionary<string, IVoiceCommand>();
         }
         
         public void StartListening()
@@ -74,9 +74,9 @@ namespace VoiceBasedApp.Droid
         { 
             isRecording=false;
             recognized = recognized.ToLower();
-            if(AllRegisteredCoomands.ContainsKey(recognized))
+            if(AllRegisteredCommands.ContainsKey(recognized))
             {
-                var command = AllRegisteredCoomands[recognized];
+                var command = AllRegisteredCommands[recognized];
                 if(command.CanExecute())
                 {
                     command.Execute();
@@ -84,7 +84,7 @@ namespace VoiceBasedApp.Droid
             }
 
 
-        MessagingCenter.Send<IVoiceToCommandService, string>(this, "STT", recognized); 
+            MessagingCenter.Send<IVoiceToCommandService, string>(this, "STT", recognized); 
         }
 
         public void StopListening()
@@ -104,28 +104,22 @@ namespace VoiceBasedApp.Droid
 
         public void RegisterCommand(string commandString, IVoiceCommand commandToBeExecuted)
         {
-            AllRegisteredCoomands.Add(commandString.ToLower(), commandToBeExecuted);
+            AllRegisteredCommands.Add(commandString.ToLower(), commandToBeExecuted);
         }
 
         public void DeregisterCommand(string commandString)
         {
-            AllRegisteredCoomands.Remove(commandString);
+            AllRegisteredCommands.Remove(commandString);
         }
 
         public List<string> GetAvailableCommands()
         {
-            //List<string> AvailableCommands = new List<string>();
+            return AllRegisteredCommands.Keys.ToList();
+        }
 
-
-            //foreach(var command in AllRegisteredCoomands.Keys)
-            //{
-            //    AvailableCommands.Add(command);
-            //}
-
-            //return AvailableCommands;
-
-            List<string> availableCommand = AllRegisteredCoomands.Keys.ToList();
-            return availableCommand;
+        public List<string> GetExecutableCommands()
+        {
+            return (AllRegisteredCommands.Where(item => item.Value.CanExecute()).Select(item => item.Key)).ToList();
         }
     }
 }
