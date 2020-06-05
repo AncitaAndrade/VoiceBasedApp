@@ -1,6 +1,7 @@
 ﻿using Android.Content;
 using Android.OS;
 using Android.Speech;
+using System.Collections.Generic;
 using VoiceBasedApp.Droid;
 using Xamarin.Forms;
 
@@ -13,6 +14,13 @@ namespace VoiceBasedApp.Droid
         private Intent SpeechIntent { get; set; }
 
         private bool isRecording;
+
+        private IDictionary<string, IVoiceCommand> AllRegisteredCoomands;
+
+        public SpeechToTextService()
+        {
+            AllRegisteredCoomands = new Dictionary<string, IVoiceCommand>();
+        }
         
         public void StartListening()
         {
@@ -65,6 +73,11 @@ namespace VoiceBasedApp.Droid
                 Recognizer.StopListening();
             }
             
+        }
+
+        public void RegisterCommand(string commandString, IVoiceCommand commandToBeExecuted)
+        {
+            AllRegisteredCoomands.Add(commandString, commandToBeExecuted);
         }
     }
 }
