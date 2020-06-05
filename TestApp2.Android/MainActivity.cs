@@ -15,7 +15,7 @@ namespace TestApp2.Android
     [Activity(Label = "Touch", Theme = "@style/AppTheme", MainLauncher = true)]
     public class MainActivity : Activity
     {
-        private ISpeechToTextService SpeechToText;
+        private IVoiceToCommandService SpeechToText;
         private bool isPermissionGranted;
 
         private TextView _textBox;
@@ -32,7 +32,7 @@ namespace TestApp2.Android
             _myButton = FindViewById<Button>(Resource.Id.myView);
             _textBox = FindViewById<TextView>(Resource.Id.textYourText);
 
-            Xamarin.Forms.MessagingCenter.Subscribe<ISpeechToTextService, string>(this, "STT", (sender, args) =>
+            Xamarin.Forms.MessagingCenter.Subscribe<IVoiceToCommandService, string>(this, "STT", (sender, args) =>
             {
                 SpeechToTextFinalResultRecieved(args);
             });
@@ -47,7 +47,7 @@ namespace TestApp2.Android
                     if (isPermissionGranted)
                     {
 
-                        SpeechToText.StartSpeechToText();
+                        SpeechToText.StartListening();
                     }
                     else
                     {

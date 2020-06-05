@@ -15,7 +15,7 @@ namespace TestApp
     public partial class MainPage : ContentPage
     {
 
-        private ISpeechToTextService speechToTextService;
+        private IVoiceToCommandService speechToTextService;
         private bool isPermissionGranted;
         
         public MainPage()
@@ -23,7 +23,7 @@ namespace TestApp
             InitializeComponent();
             try
             {
-                speechToTextService = DependencyService.Get<ISpeechToTextService>();
+                speechToTextService = DependencyService.Get<IVoiceToCommandService>();
                 MyButton.ImageSource = ImageSource.FromResource("TestApp.Images.mic.png");
                 CheckPermissionStatus();
                 SpeakInitialInstruction();
@@ -32,7 +32,7 @@ namespace TestApp
             {
                 recon.Text = ex.Message;
             }
-            MessagingCenter.Subscribe<ISpeechToTextService, string>(this, "STT", (sender, args) =>
+            MessagingCenter.Subscribe<IVoiceToCommandService, string>(this, "STT", (sender, args) =>
             {
                 SpeechToTextFinalResultRecieved(args);
             });
@@ -78,7 +78,7 @@ namespace TestApp
                 if (isPermissionGranted)
                 {
                     MyButton.ImageSource = ImageSource.FromResource("TestApp.Images.MicrophoneOnMute.png");
-                    speechToTextService.StartSpeechToText();
+                    speechToTextService.StartListening();
                 }
                 else
                 {
@@ -99,7 +99,7 @@ namespace TestApp
         private void MyButton_Released(object sender, EventArgs e)
         {
             MyButton.ImageSource = ImageSource.FromResource("TestApp.Images.mic.png");
-            speechToTextService.StopSpeechToText();
+            speechToTextService.StopListening();
         }
     }
 }

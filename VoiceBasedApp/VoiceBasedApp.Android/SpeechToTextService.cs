@@ -7,14 +7,14 @@ using Xamarin.Forms;
 [assembly: Dependency(typeof(SpeechToTextService))]
 namespace VoiceBasedApp.Droid
 {
-    public class SpeechToTextService : ISpeechToTextService
+    public class SpeechToTextService : IVoiceToCommandService
     {
         private SpeechRecognizer Recognizer { get; set; }
         private Intent SpeechIntent { get; set; }
 
         private bool isRecording;
         
-        public void StartSpeechToText()
+        public void StartListening()
         {
             StartRecordingAndRecognizing();
         }
@@ -48,16 +48,16 @@ namespace VoiceBasedApp.Droid
         private void RecListener_Error(object sender, SpeechRecognizerError e)
         {
             isRecording = false;
-            MessagingCenter.Send<ISpeechToTextService, string>(this, "STT", e.ToString());
+            MessagingCenter.Send<IVoiceToCommandService, string>(this, "STT", e.ToString());
         }
 
         private void RecListener_Recognized(object sender, string recognized) 
         { 
             isRecording=false; 
-            MessagingCenter.Send<ISpeechToTextService, string>(this, "STT", recognized); 
+            MessagingCenter.Send<IVoiceToCommandService, string>(this, "STT", recognized); 
         }
 
-        public void StopSpeechToText()
+        public void StopListening()
         {
             if(isRecording)
             {
