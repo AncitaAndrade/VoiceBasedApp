@@ -9,15 +9,15 @@ namespace VoiceBasedApp
         void StartListening();
         void StopListening();
 
-        bool IsListening(); //prio 1
+        bool IsListening(); 
 
         void RegisterCommand(string commandString, IVoiceCommand commandToBeExecuted);
 
-        //List<string> GetAvailableCommands(); //prio 3
+        List<string> GetAvailableCommands(); //prio 3
 
         //List<string> GetExecutableCommands();  // prio 3
 
-        void DeregisterCommand(string commandString);  // prio 4
+        void DeregisterCommand(string commandString); 
 
         //void RegisterListeningCompletedCallBack(Action callBack); //prio 5
 

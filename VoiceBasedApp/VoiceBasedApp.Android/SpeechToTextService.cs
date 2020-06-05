@@ -2,6 +2,7 @@
 using Android.OS;
 using Android.Speech;
 using System.Collections.Generic;
+using System.Linq;
 using VoiceBasedApp.Droid;
 using Xamarin.Forms;
 
@@ -109,6 +110,22 @@ namespace VoiceBasedApp.Droid
         public void DeregisterCommand(string commandString)
         {
             AllRegisteredCoomands.Remove(commandString);
+        }
+
+        public List<string> GetAvailableCommands()
+        {
+            //List<string> AvailableCommands = new List<string>();
+
+
+            //foreach(var command in AllRegisteredCoomands.Keys)
+            //{
+            //    AvailableCommands.Add(command);
+            //}
+
+            //return AvailableCommands;
+
+            List<string> availableCommand = AllRegisteredCoomands.Keys.ToList();
+            return availableCommand;
         }
     }
 }
