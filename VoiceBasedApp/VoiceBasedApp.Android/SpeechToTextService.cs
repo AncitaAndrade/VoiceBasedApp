@@ -74,6 +74,7 @@ namespace VoiceBasedApp.Droid
         private void RecListener_Recognized(object sender, string recognized) 
         { 
             isRecording=false;
+            recognized = recognized.ToLower();
             if(AllRegisteredCoomands.ContainsKey(recognized))
             {
                 var command = AllRegisteredCoomands[recognized];
@@ -104,7 +105,7 @@ namespace VoiceBasedApp.Droid
 
         public void RegisterCommand(string commandString, IVoiceCommand commandToBeExecuted)
         {
-            AllRegisteredCoomands.Add(commandString, commandToBeExecuted);
+            AllRegisteredCoomands.Add(commandString.ToLower(), commandToBeExecuted);
         }
     }
 }

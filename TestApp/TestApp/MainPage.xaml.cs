@@ -24,6 +24,7 @@ namespace TestApp
             try
             {
                 speechToTextService = DependencyService.Get<IVoiceToCommandService>();
+                speechToTextService.RegisterCommand("Hello",new VoiceCommand(()=> { SpeechToTextFinalResultRecieved("Command is 1:Hello"); }));
                 MyButton.ImageSource = ImageSource.FromResource("TestApp.Images.mic.png");
                 CheckPermissionStatus();
                 SpeakInitialInstruction();
@@ -32,10 +33,10 @@ namespace TestApp
             {
                 recon.Text = ex.Message;
             }
-            MessagingCenter.Subscribe<IVoiceToCommandService, string>(this, "STT", (sender, args) =>
-            {
-                SpeechToTextFinalResultRecieved(args);
-            });
+            //MessagingCenter.Subscribe<IVoiceToCommandService, string>(this, "STT", (sender, args) =>
+            //{
+            //    SpeechToTextFinalResultRecieved(args);
+            //});
         }
 
         private async void CheckPermissionStatus()
@@ -100,6 +101,24 @@ namespace TestApp
         {
             MyButton.ImageSource = ImageSource.FromResource("TestApp.Images.mic.png");
             speechToTextService.StopListening();
+        }
+    }
+
+    public class VoiceCommand : IVoiceCommand
+    {
+        private Action _action;
+        public VoiceCommand(Action action)
+        {
+            _action = action;
+        }
+        public bool CanExecute()
+        {
+            return true;
+        }
+
+        public void Execute()
+        {
+            _action.Invoke();
         }
     }
 }
