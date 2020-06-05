@@ -19,11 +19,11 @@ namespace VoiceBasedApp
 
         void DeregisterCommand(string commandString);
 
-        //void RegisterListeningCompletedCallBack(Action callBack); //prio 5
+        void RegisterListeningCompletedCallBack(Action callBack); //prio 5
 
-        // void DeregisterListeningCompletedCallBack(Action callBack); //prio 5
+         void DeregisterListeningCompletedCallBack(Action callBack); //prio 5
 
-        // void RegisterUnrecognizableCommandCallBack(Action callBack); //prio 6
+         void RegisterUnrecognizableCommandCallBack(Action callBack); //prio 6
 
 
         void DeregisterUnrecognizableCommandCallBack(Action callBack); //prio 6

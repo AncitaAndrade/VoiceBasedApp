@@ -123,6 +123,21 @@ namespace VoiceBasedApp.Droid
             return (AllRegisteredCommands.Where(item => item.Value.CanExecute()).Select(item => item.Key)).ToList();
         }
 
+        public void RegisterListeningCompletedCallBack(Action callBack)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void DeregisterListeningCompletedCallBack(Action callBack)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void RegisterUnrecognizableCommandCallBack(Action callBack)
+        {
+            throw new NotImplementedException();
+        }
+
         public void DeregisterUnrecognizableCommandCallBack(Action callBack)
         {
             throw new NotImplementedException();
@@ -137,5 +152,7 @@ namespace VoiceBasedApp.Droid
         {
             throw new NotImplementedException();
         }
+
+        
     }
 }
