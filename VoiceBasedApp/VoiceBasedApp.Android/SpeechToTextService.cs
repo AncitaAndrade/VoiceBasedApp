@@ -1,9 +1,11 @@
 ﻿using Android.Content;
 using Android.OS;
 using Android.Speech;
+using Android.Telecom;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using VoiceBasedApp.Droid;
 using Xamarin.Forms;
 
@@ -16,6 +18,14 @@ namespace VoiceBasedApp.Droid
         private Intent SpeechIntent { get; set; }
 
         private bool isRecording;
+
+        private Action _callBack;
+
+        private Action ListeningCompletion;
+
+        private Action UnrecognizableCommand;
+
+        private Action UnexecutableCallBack;
 
         private IDictionary<string, IVoiceCommand> AllRegisteredCommands;
 
@@ -125,33 +135,41 @@ namespace VoiceBasedApp.Droid
 
         public void RegisterListeningCompletedCallBack(Action callBack)
         {
-            throw new NotImplementedException();
+             _callBack = callBack;
+            _callBack += ListeningCompletion;
+
+           // callBack += ListeningCompleted;
+
         }
 
         public void DeregisterListeningCompletedCallBack(Action callBack)
         {
-            throw new NotImplementedException();
+            // _callBack -= callBack;
+
+            callBack -= ListeningCompletion;
         }
 
         public void RegisterUnrecognizableCommandCallBack(Action callBack)
         {
-            throw new NotImplementedException();
+            callBack += UnrecognizableCommand;
         }
 
         public void DeregisterUnrecognizableCommandCallBack(Action callBack)
         {
-            throw new NotImplementedException();
+            callBack -= UnrecognizableCommand;
         }
 
         public void RegisterUnexecuatbleCallBack(Action callBack)
         {
-            throw new NotImplementedException();
+            callBack += UnexecutableCallBack;
         }
 
         public void DeregisterUnexecuatbleCallBack(Action callBack)
         {
-            throw new NotImplementedException();
+            callBack -= UnexecutableCallBack; 
         }
+
+        
 
         
     }
