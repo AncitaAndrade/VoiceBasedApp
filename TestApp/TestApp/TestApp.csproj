@@ -26,6 +26,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\VoiceBasedApp\VoiceBasedApp\VoiceBasedApp.csproj" />
+    <ProjectReference Include="..\..\VoiceToCommand\VoiceToCommand.csproj" />
   </ItemGroup>
 </Project>

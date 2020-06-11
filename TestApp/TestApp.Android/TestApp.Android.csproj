@@ -90,9 +90,13 @@
     <Folder Include="Resources\drawable\" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\VoiceBasedApp\VoiceBasedApp.Android\VoiceBasedApp.Android.csproj">
-      <Project>{85b7d97f-ef82-4783-866f-ec844eea1d47}</Project>
-      <Name>VoiceBasedApp.Android</Name>
+    <ProjectReference Include="..\..\VoiceToCommandLib.Android\VoiceToCommandLib.Android.csproj">
+      <Project>{32411f5d-facf-4432-8083-adc2ad6f4b00}</Project>
+      <Name>VoiceToCommandLib.Android</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\VoiceToCommand\VoiceToCommand.csproj">
+      <Project>{7c0931f7-4933-488b-a4cf-7802b7430721}</Project>
+      <Name>VoiceToCommand</Name>
     </ProjectReference>
     <ProjectReference Include="..\TestApp\TestApp.csproj">
       <Project>{6BBD039D-08B4-4154-93A5-5764145359AE}</Project>

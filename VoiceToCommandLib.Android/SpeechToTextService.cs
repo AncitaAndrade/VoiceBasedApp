@@ -1,16 +1,17 @@
 ﻿using Android.Content;
 using Android.OS;
+using Android.App;
 using Android.Speech;
-using Android.Telecom;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using VoiceBasedApp.Droid;
+using VoiceToCommand;
+using VoiceToCommandLib.Android;
 using Xamarin.Forms;
 
 [assembly: Dependency(typeof(SpeechToTextService))]
-namespace VoiceBasedApp.Droid
+namespace VoiceToCommandLib.Android
 {
     public class SpeechToTextService : IVoiceToCommandService
     {
@@ -33,7 +34,7 @@ namespace VoiceBasedApp.Droid
         {
             AllRegisteredCommands = new Dictionary<string, IVoiceCommand>();
         }
-        
+
         public void StartListening()
         {
             StartRecordingAndRecognizing();
@@ -53,25 +54,25 @@ namespace VoiceBasedApp.Droid
 
             SpeechIntent = new Intent(RecognizerIntent.ActionRecognizeSpeech);
             SpeechIntent.PutExtra(RecognizerIntent.ExtraLanguageModel, RecognizerIntent.LanguageModelFreeForm);
-            SpeechIntent.PutExtra(RecognizerIntent.ExtraCallingPackage, Android.App.Application.Context.PackageName);
+            SpeechIntent.PutExtra(RecognizerIntent.ExtraCallingPackage, Android.App.Application.PackageName);
             Recognizer.StartListening(SpeechIntent);
         }
 
 
         private void RecListener_Ready(object sender, Bundle e) => System.Diagnostics.Debug.WriteLine(nameof(RecListener_Ready));
 
-        private void RecListener_BeginSpeech() 
+        private void RecListener_BeginSpeech()
         {
             isRecording = true;
-           
+
             System.Diagnostics.Debug.WriteLine(nameof(RecListener_BeginSpeech));
-                
+
         }
 
         private void RecListener_EndSpeech()
         {
             isRecording = false;
-           
+
             System.Diagnostics.Debug.WriteLine(nameof(RecListener_EndSpeech));
         }
 
@@ -81,31 +82,31 @@ namespace VoiceBasedApp.Droid
             MessagingCenter.Send<IVoiceToCommandService, string>(this, "STT", e.ToString());
         }
 
-        private void RecListener_Recognized(object sender, string recognized) 
-        { 
-            isRecording=false;
+        private void RecListener_Recognized(object sender, string recognized)
+        {
+            isRecording = false;
             recognized = recognized.ToLower();
-            if(AllRegisteredCommands.ContainsKey(recognized))
+            if (AllRegisteredCommands.ContainsKey(recognized))
             {
                 var command = AllRegisteredCommands[recognized];
-                if(command.CanExecute())
+                if (command.CanExecute())
                 {
                     command.Execute();
                 }
             }
 
 
-            MessagingCenter.Send<IVoiceToCommandService, string>(this, "STT", recognized); 
+            MessagingCenter.Send<IVoiceToCommandService, string>(this, "STT", recognized);
         }
 
         public void StopListening()
         {
-            if(isRecording)
+            if (isRecording)
             {
                 isRecording = false;
                 Recognizer.StopListening();
             }
-            
+
         }
 
         public bool IsListening()
@@ -135,7 +136,7 @@ namespace VoiceBasedApp.Droid
 
         public void RegisterListeningCompletedCallBack(Action callBack)
         {
-             _callBack = callBack;
+            _callBack = callBack;
             _callBack += ListeningCompletion;
 
             // callBack += ListeningCompleted;
@@ -149,7 +150,7 @@ namespace VoiceBasedApp.Droid
             // _callBack -= callBack;
 
             callBack -= ListeningCompletion;
-           
+
         }
 
         public void RegisterUnrecognizableCommandCallBack(Action callBack)
@@ -169,11 +170,11 @@ namespace VoiceBasedApp.Droid
 
         public void DeregisterUnexecuatbleCallBack(Action callBack)
         {
-            callBack -= UnexecutableCallBack; 
+            callBack -= UnexecutableCallBack;
         }
 
-        
 
-        
+
+
     }
 }
