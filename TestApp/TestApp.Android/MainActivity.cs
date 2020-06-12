@@ -5,6 +5,8 @@ using Android.OS;
 using Plugin.Permissions;
 using Autofac;
 using VoiceToCommandLib.Android;
+using Autofac.Extras.CommonServiceLocator;
+using CommonServiceLocator;
 
 
 namespace TestApp.Droid
@@ -21,10 +23,8 @@ namespace TestApp.Droid
             ContainerBuilder cb = new ContainerBuilder();
             cb.RegisterType<SpeechToTextService>().As<SpeechToTextService>().SingleInstance();
             IContainer container = cb.Build();
-            container.Resolve<SpeechToTextService>();
-
-           // container.AutofacServiceLocator serviceLocator = new AutofacServiceLocator(container);
-           // ServiceLocator.SetLocatorProvider(() => serviceLocator);
+           AutofacServiceLocator serviceLocator = new AutofacServiceLocator(container);
+           ServiceLocator.SetLocatorProvider(() => serviceLocator);
 
             base.OnCreate(savedInstanceState);
 
