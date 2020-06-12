@@ -4,19 +4,12 @@ using Android.Speech;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-<<<<<<< HEAD
 using System.Threading.Tasks;
 using VoiceToCommandLibrary;
 using VoiceToCommandLib.Android;
 using Xamarin.Forms;
 using Application = Android.App.Application;
-=======
-using VoiceToCommand;
-using VoiceToCommandLib.Android;
-using Xamarin.Forms;
-using Application = Android.App.Application;
 
->>>>>>> 3cd35c1bc416ef769d30a561058a9eef1e28c9cf
 
 [assembly: Dependency(typeof(SpeechToTextService))]
 namespace VoiceToCommandLib.Android
