@@ -6,9 +6,10 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using VoiceToCommand;
+using VoiceToCommandLibrary;
 using VoiceToCommandLib.Android;
 using Xamarin.Forms;
+using Application = Android.App.Application;
 
 [assembly: Dependency(typeof(SpeechToTextService))]
 namespace VoiceToCommandLib.Android
@@ -49,12 +50,12 @@ namespace VoiceToCommandLib.Android
             recListener.Ready += RecListener_Ready;
             recListener.Recognized += RecListener_Recognized;
 
-            Recognizer = SpeechRecognizer.CreateSpeechRecognizer(Android.App.Application.Context);
+            Recognizer = SpeechRecognizer.CreateSpeechRecognizer(Application.Context);
             Recognizer.SetRecognitionListener(recListener);
 
             SpeechIntent = new Intent(RecognizerIntent.ActionRecognizeSpeech);
             SpeechIntent.PutExtra(RecognizerIntent.ExtraLanguageModel, RecognizerIntent.LanguageModelFreeForm);
-            SpeechIntent.PutExtra(RecognizerIntent.ExtraCallingPackage, Android.App.Application.PackageName);
+            SpeechIntent.PutExtra(RecognizerIntent.ExtraCallingPackage, Application.Context.PackageName);
             Recognizer.StartListening(SpeechIntent);
         }
 

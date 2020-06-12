@@ -1,6 +1,6 @@
 ﻿using Android.Views;
 using TestApp.Droid;
-using VoiceToCommand;
+using VoiceToCommandLibrary;
 using VoiceToCommandLib.Android;
 using Xamarin.Forms;
 using Xamarin.Forms.Platform.Android;

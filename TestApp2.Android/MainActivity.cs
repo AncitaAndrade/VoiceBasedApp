@@ -7,8 +7,8 @@ using Plugin.Permissions;
 using PermissionStatus = Plugin.Permissions.Abstractions.PermissionStatus;
 using System;
 using Android.Runtime;
-using VoiceBasedApp.Droid;
-using VoiceBasedApp;
+using VoiceToCommandLibrary;
+using VoiceToCommandLib.Android;
 
 namespace TestApp2.Android
 {

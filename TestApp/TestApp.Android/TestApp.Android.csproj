@@ -94,9 +94,9 @@
       <Project>{32411f5d-facf-4432-8083-adc2ad6f4b00}</Project>
       <Name>VoiceToCommandLib.Android</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\VoiceToCommand\VoiceToCommand.csproj">
-      <Project>{7c0931f7-4933-488b-a4cf-7802b7430721}</Project>
-      <Name>VoiceToCommand</Name>
+    <ProjectReference Include="..\..\VoiceToCommandLibrary\VoiceToCommandLibrary.csproj">
+      <Project>{d5990123-88d2-462f-aafd-f2435be0a96b}</Project>
+      <Name>VoiceToCommandLibrary</Name>
     </ProjectReference>
     <ProjectReference Include="..\TestApp\TestApp.csproj">
       <Project>{6BBD039D-08B4-4154-93A5-5764145359AE}</Project>
