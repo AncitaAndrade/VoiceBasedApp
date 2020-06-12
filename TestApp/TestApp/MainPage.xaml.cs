@@ -6,6 +6,7 @@ using Xamarin.Essentials;
 using Plugin.Permissions;
 using Plugin.Permissions.Abstractions;
 using PermissionStatus = Plugin.Permissions.Abstractions.PermissionStatus;
+using CommonServiceLocator;
 
 namespace TestApp
 {
@@ -23,7 +24,8 @@ namespace TestApp
             InitializeComponent();
             try
             {
-                speechToTextService = DependencyService.Get<IVoiceToCommandService>();
+                //speechToTextService = DependencyService.Get<IVoiceToCommandService>();
+                speechToTextService = ServiceLocator.Current.GetInstance<IVoiceToCommandService>();
                 RegisterVoiceCommands();
                 MyButton.ImageSource = ImageSource.FromResource("TestApp.Images.mic.png");
                 CheckPermissionStatus();
