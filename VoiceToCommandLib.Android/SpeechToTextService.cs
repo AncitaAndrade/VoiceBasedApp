@@ -1,15 +1,22 @@
 ﻿using Android.Content;
 using Android.OS;
-using Android.App;
 using Android.Speech;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+<<<<<<< HEAD
 using System.Threading.Tasks;
 using VoiceToCommandLibrary;
 using VoiceToCommandLib.Android;
 using Xamarin.Forms;
 using Application = Android.App.Application;
+=======
+using VoiceToCommand;
+using VoiceToCommandLib.Android;
+using Xamarin.Forms;
+using Application = Android.App.Application;
+
+>>>>>>> 3cd35c1bc416ef769d30a561058a9eef1e28c9cf
 
 [assembly: Dependency(typeof(SpeechToTextService))]
 namespace VoiceToCommandLib.Android
@@ -20,14 +27,6 @@ namespace VoiceToCommandLib.Android
         private Intent SpeechIntent { get; set; }
 
         private bool isRecording;
-
-        private Action _callBack;
-
-        private Action ListeningCompletion;
-
-        private Action UnrecognizableCommand;
-
-        private Action UnexecutableCallBack;
 
         private IDictionary<string, IVoiceCommand> AllRegisteredCommands;
 
@@ -137,41 +136,31 @@ namespace VoiceToCommandLib.Android
 
         public void RegisterListeningCompletedCallBack(Action callBack)
         {
-            _callBack = callBack;
-            _callBack += ListeningCompletion;
-
-            // callBack += ListeningCompleted;
-
-            ListeningCompletion += callBack;
 
         }
 
         public void DeregisterListeningCompletedCallBack(Action callBack)
         {
-            // _callBack -= callBack;
-
-            callBack -= ListeningCompletion;
-
         }
 
         public void RegisterUnrecognizableCommandCallBack(Action callBack)
         {
-            callBack += UnrecognizableCommand;
+           
         }
 
         public void DeregisterUnrecognizableCommandCallBack(Action callBack)
         {
-            callBack -= UnrecognizableCommand;
+            
         }
 
         public void RegisterUnexecuatbleCallBack(Action callBack)
         {
-            callBack += UnexecutableCallBack;
+            
         }
 
         public void DeregisterUnexecuatbleCallBack(Action callBack)
         {
-            callBack -= UnexecutableCallBack;
+           
         }
 
 
