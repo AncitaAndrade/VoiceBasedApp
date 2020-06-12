@@ -53,7 +53,7 @@ namespace TestApp
 
         private void UpdateTextBox(string message)
         {
-            recon.Text = message;
+            LabelDisplay.Text = message;
         }
 
         private async void CheckPermissionStatus()

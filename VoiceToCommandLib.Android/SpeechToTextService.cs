@@ -79,12 +79,13 @@ namespace VoiceToCommandLib.Android
         {
             isRecording = false;
             recognized = recognized.ToLower();
+            var displayCommand = AllRegisteredCommands["type"];
+            displayCommand.ExecuteWithResult(recognized);
             if (AllRegisteredCommands.ContainsKey(recognized))
             {
                 var command = AllRegisteredCommands[recognized];
                 if (command.CanExecute())
                 {
-                    command.ExecuteWithResult(recognized);
                     command.Execute();
                 }
             }
