@@ -42,7 +42,7 @@ namespace VoiceBasedApp
 
         bool CanExecute();
 
-       
+        void ExecuteWithResult();
 
     }
 

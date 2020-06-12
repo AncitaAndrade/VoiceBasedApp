@@ -84,6 +84,7 @@ namespace VoiceToCommandLib.Android
                 var command = AllRegisteredCommands[recognized];
                 if (command.CanExecute())
                 {
+                    command.ExecuteWithResult(recognized);
                     command.Execute();
                 }
             }
