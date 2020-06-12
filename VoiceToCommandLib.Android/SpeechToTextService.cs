@@ -1,14 +1,14 @@
 ﻿using Android.Content;
 using Android.OS;
-using Android.App;
 using Android.Speech;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 using VoiceToCommand;
 using VoiceToCommandLib.Android;
 using Xamarin.Forms;
+using Application = Android.App.Application;
+
 
 [assembly: Dependency(typeof(SpeechToTextService))]
 namespace VoiceToCommandLib.Android
@@ -19,14 +19,6 @@ namespace VoiceToCommandLib.Android
         private Intent SpeechIntent { get; set; }
 
         private bool isRecording;
-
-        private Action _callBack;
-
-        private Action ListeningCompletion;
-
-        private Action UnrecognizableCommand;
-
-        private Action UnexecutableCallBack;
 
         private IDictionary<string, IVoiceCommand> AllRegisteredCommands;
 
@@ -49,12 +41,12 @@ namespace VoiceToCommandLib.Android
             recListener.Ready += RecListener_Ready;
             recListener.Recognized += RecListener_Recognized;
 
-            Recognizer = SpeechRecognizer.CreateSpeechRecognizer(Android.App.Application.Context);
+            Recognizer = SpeechRecognizer.CreateSpeechRecognizer(Application.Context);
             Recognizer.SetRecognitionListener(recListener);
 
             SpeechIntent = new Intent(RecognizerIntent.ActionRecognizeSpeech);
             SpeechIntent.PutExtra(RecognizerIntent.ExtraLanguageModel, RecognizerIntent.LanguageModelFreeForm);
-            SpeechIntent.PutExtra(RecognizerIntent.ExtraCallingPackage, Android.App.Application.PackageName);
+            SpeechIntent.PutExtra(RecognizerIntent.ExtraCallingPackage, Application.Context.PackageName);
             Recognizer.StartListening(SpeechIntent);
         }
 
@@ -136,41 +128,31 @@ namespace VoiceToCommandLib.Android
 
         public void RegisterListeningCompletedCallBack(Action callBack)
         {
-            _callBack = callBack;
-            _callBack += ListeningCompletion;
-
-            // callBack += ListeningCompleted;
-
-            ListeningCompletion += callBack;
 
         }
 
         public void DeregisterListeningCompletedCallBack(Action callBack)
         {
-            // _callBack -= callBack;
-
-            callBack -= ListeningCompletion;
-
         }
 
         public void RegisterUnrecognizableCommandCallBack(Action callBack)
         {
-            callBack += UnrecognizableCommand;
+           
         }
 
         public void DeregisterUnrecognizableCommandCallBack(Action callBack)
         {
-            callBack -= UnrecognizableCommand;
+            
         }
 
         public void RegisterUnexecuatbleCallBack(Action callBack)
         {
-            callBack += UnexecutableCallBack;
+            
         }
 
         public void DeregisterUnexecuatbleCallBack(Action callBack)
         {
-            callBack -= UnexecutableCallBack;
+           
         }
 
 
