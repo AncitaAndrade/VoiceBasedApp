@@ -11,24 +11,24 @@ using Xamarin.Forms;
 using Application = Android.App.Application;
 
 
-[assembly: Dependency(typeof(SpeechToTextService))]
+//[assembly: Dependency(typeof(SpeechToTextService))]
 namespace VoiceToCommandLib.Android
 {
-    public class SpeechToTextService : IVoiceToCommandService
+    public class SpeechToTextService : CommonCode
     {
         private SpeechRecognizer Recognizer { get; set; }
         private Intent SpeechIntent { get; set; }
 
-        private bool isRecording;
+        //private bool isRecording;
 
-        private IDictionary<string, IVoiceCommand> AllRegisteredCommands;
+        //private IDictionary<string, IVoiceCommand> AllRegisteredCommands;
 
         public SpeechToTextService()
         {
             AllRegisteredCommands = new Dictionary<string, IVoiceCommand>();
         }
 
-        public void StartListening()
+        public override void StartListening()
         {
             StartRecordingAndRecognizing();
         }
@@ -92,7 +92,7 @@ namespace VoiceToCommandLib.Android
             MessagingCenter.Send<IVoiceToCommandService, string>(this, "STT", recognized);
         }
 
-        public void StopListening()
+        public override void StopListening()
         {
             if (isRecording)
             {
@@ -102,59 +102,60 @@ namespace VoiceToCommandLib.Android
 
         }
 
-        public bool IsListening()
-        {
-            return isRecording;
-        }
 
-        public void RegisterCommand(string commandString, IVoiceCommand commandToBeExecuted)
-        {
-            AllRegisteredCommands.Add(commandString.ToLower(), commandToBeExecuted);
-        }
+        //public bool IsListening()
+        //{
+        //    return isRecording;
+        //}
 
-        public void DeregisterCommand(string commandString)
-        {
-            AllRegisteredCommands.Remove(commandString);
-        }
+        //public void RegisterCommand(string commandString, IVoiceCommand commandToBeExecuted)
+        //{
+        //    AllRegisteredCommands.Add(commandString.ToLower(), commandToBeExecuted);
+        //}
 
-        public List<string> GetAvailableCommands()
-        {
-            return AllRegisteredCommands.Keys.ToList();
-        }
+        //public void DeregisterCommand(string commandString)
+        //{
+        //    AllRegisteredCommands.Remove(commandString);
+        //}
 
-        public List<string> GetExecutableCommands()
-        {
-            return (AllRegisteredCommands.Where(item => item.Value.CanExecute()).Select(item => item.Key)).ToList();
-        }
+        //public List<string> GetAvailableCommands()
+        //{
+        //    return AllRegisteredCommands.Keys.ToList();
+        //}
 
-        public void RegisterListeningCompletedCallBack(Action callBack)
-        {
+        //public List<string> GetExecutableCommands()
+        //{
+        //    return (AllRegisteredCommands.Where(item => item.Value.CanExecute()).Select(item => item.Key)).ToList();
+        //}
 
-        }
+        //public void RegisterListeningCompletedCallBack(Action callBack)
+        //{
 
-        public void DeregisterListeningCompletedCallBack(Action callBack)
-        {
-        }
+        //}
 
-        public void RegisterUnrecognizableCommandCallBack(Action callBack)
-        {
-           
-        }
+        //public void DeregisterListeningCompletedCallBack(Action callBack)
+        //{
+        //}
 
-        public void DeregisterUnrecognizableCommandCallBack(Action callBack)
-        {
-            
-        }
+        //public void RegisterUnrecognizableCommandCallBack(Action callBack)
+        //{
 
-        public void RegisterUnexecuatbleCallBack(Action callBack)
-        {
-            
-        }
+        //}
 
-        public void DeregisterUnexecuatbleCallBack(Action callBack)
-        {
-           
-        }
+        //public void DeregisterUnrecognizableCommandCallBack(Action callBack)
+        //{
+
+        //}
+
+        //public void RegisterUnexecuatbleCallBack(Action callBack)
+        //{
+
+        //}
+
+        //public void DeregisterUnexecuatbleCallBack(Action callBack)
+        //{
+
+        //}
 
 
 
