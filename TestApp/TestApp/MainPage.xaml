@@ -8,6 +8,8 @@
 
     <StackLayout Margin="10,50,10,10">
         <!-- Place new controls here -->
+        <Label x:Name="LabelDisplay">
+        </Label>
         <TestApp:CustomButton 
             x:Name="MyButton" 
             WidthRequest="150"

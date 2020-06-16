@@ -48,9 +48,12 @@ namespace TestApp
             speechToTextService.RegisterCommand("Hello", new VoiceCommand(() => { SpeechToTextFinalResultRecieved("Command is 1:Hello"); }));
             speechToTextService.RegisterCommand("Next", new VoiceCommand(() => { SpeechToTextFinalResultRecieved("Command is 2:Go Next"); }));
             speechToTextService.RegisterCommand("Back", new VoiceCommand(() => { SpeechToTextFinalResultRecieved("Command is 3:Go Back"); }));
-            
+            speechToTextService.RegisterCommand("type",new VoiceCommand(UpdateTextBox));
+        }
 
-           
+        private void UpdateTextBox(string message)
+        {
+            LabelDisplay.Text = message;
         }
 
         private async void CheckPermissionStatus()
@@ -121,13 +124,24 @@ namespace TestApp
     public class VoiceCommand : IVoiceCommand
     {
         private Action _action;
+        private Action<string> _actionWithResult;
         public VoiceCommand(Action action)
         {
             _action = action;
         }
+
+        public VoiceCommand(Action<string> strAction)
+        {
+            _actionWithResult = strAction;
+        }
         public bool CanExecute()
         {
             return true;
+        }
+
+        public void ExecuteWithResult(string str)
+        {
+            _actionWithResult.Invoke(str);
         }
 
         public void Execute()

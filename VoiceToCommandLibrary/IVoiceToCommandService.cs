@@ -43,6 +43,6 @@ namespace VoiceToCommandLibrary
         bool CanExecute();
 
 
-
+        void ExecuteWithResult(string str);
     }
 }
