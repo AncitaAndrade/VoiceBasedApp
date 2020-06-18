@@ -4,9 +4,10 @@ using Android.Runtime;
 using Android.OS;
 using Plugin.Permissions;
 using Autofac;
-using VoiceToCommandLib.Android;
+using VoiceToCommandLib.Droid;
 using Autofac.Extras.CommonServiceLocator;
 using CommonServiceLocator;
+using VoiceToCommand.Core;
 
 
 namespace TestApp.Droid
@@ -21,7 +22,7 @@ namespace TestApp.Droid
             ToolbarResource = Resource.Layout.Toolbar;
 
             ContainerBuilder cb = new ContainerBuilder();
-            cb.RegisterType<SpeechToTextService>().As<SpeechToTextService>().SingleInstance();
+            cb.RegisterType<VoiceToCommandServiceAndroid>().As<IVoiceToCommandService>().SingleInstance();
             IContainer container = cb.Build();
            AutofacServiceLocator serviceLocator = new AutofacServiceLocator(container);
            ServiceLocator.SetLocatorProvider(() => serviceLocator);

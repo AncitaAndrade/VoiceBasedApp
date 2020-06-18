@@ -1,7 +1,7 @@
 ﻿using System;
 using System.ComponentModel;
 using Xamarin.Forms;
-using VoiceToCommandLibrary;
+using VoiceToCommand.Core;
 using Xamarin.Essentials;
 using Plugin.Permissions;
 using Plugin.Permissions.Abstractions;
