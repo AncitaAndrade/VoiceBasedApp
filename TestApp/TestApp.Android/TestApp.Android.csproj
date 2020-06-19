@@ -63,9 +63,6 @@
     <PackageReference Include="CommonServiceLocator">
       <Version>2.0.5</Version>
     </PackageReference>
-    <PackageReference Include="VoiceToCommandAndroidLib">
-      <Version>1.0.0</Version>
-    </PackageReference>
     <PackageReference Include="Xamarin.Forms" Version="4.7.0.813-pre2" />
     <PackageReference Include="Xamarin.Essentials" Version="1.5.3.2" />
   </ItemGroup>
@@ -102,6 +99,14 @@
     <Folder Include="Resources\drawable\" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\VoiceToCommandLib.Android\VoiceToCommandLib.Android.csproj">
+      <Project>{32411f5d-facf-4432-8083-adc2ad6f4b00}</Project>
+      <Name>VoiceToCommandLib.Android</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\VoiceToCommandLibrary\VoiceToCommandLibrary.csproj">
+      <Project>{d5990123-88d2-462f-aafd-f2435be0a96b}</Project>
+      <Name>VoiceToCommandLibrary</Name>
+    </ProjectReference>
     <ProjectReference Include="..\TestApp\TestApp.csproj">
       <Project>{6BBD039D-08B4-4154-93A5-5764145359AE}</Project>
       <Name>TestApp</Name>

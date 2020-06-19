@@ -10,6 +10,7 @@
         <!-- Place new controls here -->
         <Label x:Name="LabelDisplay">
         </Label>
+        <!--<ActivityIndicator Color="Red" x:Name="activity" IsRunning="False" IsEnabled="False" IsVisible="False"/>-->
         <TestApp:CustomButton 
             x:Name="MyButton" 
             WidthRequest="150"

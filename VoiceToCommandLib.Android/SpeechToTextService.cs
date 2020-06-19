@@ -5,10 +5,17 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Android.Animation;
+using Android.Support.Design.Animation;
+using Android.Views.Animations;
 using VoiceToCommandLibrary;
 using VoiceToCommandLib.Android;
 using Xamarin.Forms;
+using Xamarin.Forms.Platform.Android;
+using Animation = Android.Views.Animations.Animation;
 using Application = Android.App.Application;
+
+
 
 
 //[assembly: Dependency(typeof(SpeechToTextService))]
@@ -16,6 +23,10 @@ namespace VoiceToCommandLib.Android
 {
     public class SpeechToTextService : CommonCode
     {
+        
+        
+
+
         private SpeechRecognizer Recognizer { get; set; }
         private Intent SpeechIntent { get; set; }
 
@@ -35,6 +46,10 @@ namespace VoiceToCommandLib.Android
 
         private void StartRecordingAndRecognizing()
         {
+            ActivityIndicatorRenderer activity = new ActivityIndicatorRenderer(Application.Context);
+            //var animation = new Animation(v => image.Scale = v, 1, 2);
+
+
             var recListener = new RecognitionListener();
             recListener.BeginSpeech += RecListener_BeginSpeech;
             recListener.EndSpeech += RecListener_EndSpeech;
@@ -49,6 +64,8 @@ namespace VoiceToCommandLib.Android
             SpeechIntent.PutExtra(RecognizerIntent.ExtraLanguageModel, RecognizerIntent.LanguageModelFreeForm);
             SpeechIntent.PutExtra(RecognizerIntent.ExtraCallingPackage, Application.Context.PackageName);
             Recognizer.StartListening(SpeechIntent);
+            //activity.StartAnimation(animation);
+
         }
 
 
@@ -100,6 +117,7 @@ namespace VoiceToCommandLib.Android
             {
                 isRecording = false;
                 Recognizer.StopListening();
+               
             }
 
         }

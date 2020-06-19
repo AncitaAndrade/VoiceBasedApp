@@ -1,11 +1,12 @@
 ﻿using System;
 using System.ComponentModel;
 using Xamarin.Forms;
-using VoiceToCommand.Core;
+//using VoiceToCommand.Core;
 using Xamarin.Essentials;
 using Plugin.Permissions;
 using Plugin.Permissions.Abstractions;
 using PermissionStatus = Plugin.Permissions.Abstractions.PermissionStatus;
+using VoiceToCommandLibrary;
 using CommonServiceLocator;
 
 namespace TestApp
@@ -95,8 +96,13 @@ namespace TestApp
             {
                 if (isPermissionGranted)
                 {
+                    
                     MyButton.ImageSource = ImageSource.FromResource("TestApp.Images.MicrophoneOnMute.png");
                     speechToTextService.StartListening();
+                    //activity.IsRunning = true;
+                    //activity.IsEnabled = true;
+                    //activity.IsVisible = true;
+                   
                 }
                 else
                 {
@@ -118,6 +124,10 @@ namespace TestApp
         {
             MyButton.ImageSource = ImageSource.FromResource("TestApp.Images.mic.png");
             speechToTextService.StopListening();
+            //activity.IsRunning = false;
+            //activity.IsEnabled = false;
+            //activity.IsVisible = false;
+            
         }
     }
 
