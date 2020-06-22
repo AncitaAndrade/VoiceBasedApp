@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Windows.Input;
+using Microsoft.PhoneticMatching.Matchers.FuzzyMatcher.Normalized;
 
 namespace VoiceBasedApp
 {
@@ -9,7 +10,7 @@ namespace VoiceBasedApp
         void StartListening();
         void StopListening();
 
-        bool IsListening(); 
+        bool IsListening();
 
         void RegisterCommand(string commandString, IVoiceCommand commandToBeExecuted);
 
@@ -21,9 +22,9 @@ namespace VoiceBasedApp
 
         void RegisterListeningCompletedCallBack(Action callBack); //prio 5
 
-         void DeregisterListeningCompletedCallBack(Action callBack); //prio 5
+        void DeregisterListeningCompletedCallBack(Action callBack); //prio 5
 
-         void RegisterUnrecognizableCommandCallBack(Action callBack); //prio 6
+        void RegisterUnrecognizableCommandCallBack(Action callBack); //prio 6
 
 
         void DeregisterUnrecognizableCommandCallBack(Action callBack); //prio 6
@@ -42,8 +43,30 @@ namespace VoiceBasedApp
 
         bool CanExecute();
 
-        void ExecuteWithResult();
 
+        void ExecuteWithResult(string str);
+    }
+
+    public static  class Demo
+    {
+        public static string demoMethod(string Recognized)
+        {
+            string[] targets =
+            {
+                "Back",
+                "Red",
+                "Home",
+                "Decrease"
+            };
+
+
+
+            var matcher = new EnPhoneticFuzzyMatcher<string>(targets);
+
+            var result = matcher.FindNearest("Right");
+
+             return result.ToString();
+        }
     }
 
     

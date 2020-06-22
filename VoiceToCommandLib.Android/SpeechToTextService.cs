@@ -6,16 +6,17 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Android.Animation;
+using Android.Net;
 using Android.Support.Design.Animation;
 using Android.Views.Animations;
-using VoiceToCommandLibrary;
+//using VoiceToCommandLibrary;
+using VoiceBasedApp;
 using VoiceToCommandLib.Android;
 using Xamarin.Forms;
 using Xamarin.Forms.Platform.Android;
 using Animation = Android.Views.Animations.Animation;
 using Application = Android.App.Application;
-
-
+using AnimationUtils = Android.Views.Animations.AnimationUtils;
 
 
 //[assembly: Dependency(typeof(SpeechToTextService))]
@@ -23,24 +24,37 @@ namespace VoiceToCommandLib.Android
 {
     public class SpeechToTextService : CommonCode
     {
-        
-        
-
+       
 
         private SpeechRecognizer Recognizer { get; set; }
         private Intent SpeechIntent { get; set; }
-
+       
         //private bool isRecording;
 
         //private IDictionary<string, IVoiceCommand> AllRegisteredCommands;
+
 
         public SpeechToTextService()
         {
             AllRegisteredCommands = new Dictionary<string, IVoiceCommand>();
         }
 
+        //public Boolean isOnline()
+        //{
+        //    ConnectivityManager conMgr = (ConnectivityManager).getSystemService(Context.ConnectivityService);
+        //    NetworkInfo netInfo = conMgr.getActiveNetworkInfo();
+
+        //    if (netInfo == null || !netInfo.isConnected() || !netInfo.isAvailable())
+        //    {
+        //        Toast.MakeText(context, "No Internet connection!", Toast.LENGTH_LONG).show();
+        //        return false;
+        //    }
+        //    return true;
+        //}
         public override void StartListening()
         {
+
+            
             StartRecordingAndRecognizing();
         }
 
@@ -48,6 +62,7 @@ namespace VoiceToCommandLib.Android
         {
             ActivityIndicatorRenderer activity = new ActivityIndicatorRenderer(Application.Context);
             //var animation = new Animation(v => image.Scale = v, 1, 2);
+            //Animation myAnimation = AnimationUtils.LoadAnimation(Resource.Animation.hyperSpace);
 
 
             var recListener = new RecognitionListener();
@@ -64,7 +79,7 @@ namespace VoiceToCommandLib.Android
             SpeechIntent.PutExtra(RecognizerIntent.ExtraLanguageModel, RecognizerIntent.LanguageModelFreeForm);
             SpeechIntent.PutExtra(RecognizerIntent.ExtraCallingPackage, Application.Context.PackageName);
             Recognizer.StartListening(SpeechIntent);
-            //activity.StartAnimation(animation);
+           // activity.StartAnimation(myAnimation);
 
         }
 
@@ -105,6 +120,11 @@ namespace VoiceToCommandLib.Android
                 {
                     command.Execute();
                 }
+            }
+            else
+            {
+               var result =  Demo.demoMethod(recognized);
+               System.Diagnostics.Debug.WriteLine(result);
             }
 
 

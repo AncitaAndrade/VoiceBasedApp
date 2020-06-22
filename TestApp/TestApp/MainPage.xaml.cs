@@ -9,6 +9,7 @@ using PermissionStatus = Plugin.Permissions.Abstractions.PermissionStatus;
 using VoiceToCommandLibrary;
 using CommonServiceLocator;
 
+
 namespace TestApp
 {
     // Learn more about making custom code visible in the Xamarin.Forms previewer
@@ -45,6 +46,7 @@ namespace TestApp
 
         private void RegisterVoiceCommands()
         {
+            
             
             speechToTextService.RegisterCommand("Hello", new VoiceCommand(() => { SpeechToTextFinalResultRecieved("Command is 1:Hello"); }));
             speechToTextService.RegisterCommand("Next", new VoiceCommand(() => { SpeechToTextFinalResultRecieved("Command is 2:Go Next"); }));
